@@ -14,6 +14,11 @@ public sealed class InstructorRoleService(IMemoryCache cache, IInstructorRoleRep
         throw new NotImplementedException();
     }
 
+    public Task<Result> DeleteInstructorRoleAsync(Guid id, CancellationToken ct)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<Result> DeleteInstructorRoleAsync(int id, CancellationToken ct)
     {
         throw new NotImplementedException();

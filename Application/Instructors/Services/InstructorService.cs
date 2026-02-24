@@ -41,7 +41,7 @@ public sealed class InstructorService(InstructorCache cache, IInstructorReposito
 
 	}
 
-    public Task<Result> DeleteInstructorAsync(string id, CancellationToken ct)
+    public Task<Result> DeleteInstructorAsync(Guid id, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
@@ -51,7 +51,7 @@ public sealed class InstructorService(InstructorCache cache, IInstructorReposito
         throw new NotImplementedException();
     }
 
-    public Task<Result<Instructor?>> GetInstructorByIdAsync(string id, CancellationToken ct)
+    public Task<Result<Instructor?>> GetInstructorByIdAsync(Guid id, CancellationToken ct)
     {
         throw new NotImplementedException();
     }

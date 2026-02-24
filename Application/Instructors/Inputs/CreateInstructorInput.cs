@@ -6,6 +6,6 @@ public sealed record CreateInstructorInput
 	string LastName,
 	string Email,
 	string? PhoneNumber,
-	int RoleId
+	Guid RoleId
 
 );
