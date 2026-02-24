@@ -4,9 +4,9 @@ namespace Domain.Instructors;
 
 public sealed class Instructor
 {
-	public Instructor(string? id, string? firstName, string? lastName, string? email, string? phoneNumber, InstructorRole role)
+	public Instructor(Guid id, string? firstName, string? lastName, string? email, string? phoneNumber, InstructorRole role)
 	{
-		if (string.IsNullOrWhiteSpace(id))
+		if (id == Guid.Empty)
 			throw new DomainValidationException("Id is required.");
 
 		if (string.IsNullOrWhiteSpace(firstName))
@@ -21,7 +21,7 @@ public sealed class Instructor
 		if (role is null)
 			throw new DomainValidationException("Role is required.");
 
-		Id = id.Trim();
+		Id = id;
 		FirstName = firstName.Trim();
 		LastName = lastName.Trim();
 		Email = email.Trim();
@@ -29,7 +29,7 @@ public sealed class Instructor
 		Role = role;
 	}
 
-	public string Id { get; }
+	public Guid Id { get; }
 	public string FirstName { get; private set; }
 	public string LastName { get; private set; }
 	public string Email { get; private set; }
