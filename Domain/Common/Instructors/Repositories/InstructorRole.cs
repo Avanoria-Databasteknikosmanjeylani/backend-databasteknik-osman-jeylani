@@ -12,9 +12,9 @@ public sealed class InstructorRole
 		RoleName = roleName.Trim();
 	}
 
-	public InstructorRole(int id, string roleName)
+	public InstructorRole(Guid id, string roleName)
 	{
-		if (id < 1)
+		if (id == Guid.Empty)
 			throw new DomainValidationException("Id is required.");
 
 		if (string.IsNullOrWhiteSpace(roleName))
@@ -24,7 +24,7 @@ public sealed class InstructorRole
 		RoleName = roleName.Trim();
 	}
 
-	public int Id { get; }
+	public Guid Id { get; }
 	public string RoleName { get; set; } = string.Empty;
 
 }
