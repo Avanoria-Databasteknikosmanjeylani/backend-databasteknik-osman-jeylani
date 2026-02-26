@@ -41,27 +41,44 @@ public sealed class InstructorService(InstructorCache cache, IInstructorReposito
 
 	}
 
-    public Task<Result> DeleteInstructorAsync(Guid id, CancellationToken ct)
+	public async Task<Result> DeleteInstructorAsync(Guid id, CancellationToken ct)
+	{
+		if (id == Guid.Empty)
+			return Result.BadRequest("Invalid id.");
+
+		var removed = await instructorRepo.RemoveAsync(id, ct);
+
+		if (!removed)
+			return Result.NotFound("Instructor was not found.");
+
+		return Result.Ok();
+	}
+
+	public Task<Result<Instructor?>> GetInstructorByEmailAsync(string email, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Result<Instructor?>> GetInstructorByEmailAsync(string email, CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
+	public async Task<Result<Instructor?>> GetInstructorByIdAsync(Guid id, CancellationToken ct)
+	{
+		if (id == Guid.Empty)
+			return Result<Instructor?>.BadRequest("Invalid id.");
 
-    public Task<Result<Instructor?>> GetInstructorByIdAsync(Guid id, CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
+		var instructor = await instructorRepo.GetByIdAsync(id, ct);
 
-    public Task<IReadOnlyList<Instructor>> GetInstructorsAsync(CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
+		if (instructor is null)
+			return Result<Instructor?>.NotFound("Instructor was not found.");
 
-    public Task<Result<Instructor?>> UpdateInstructorAsync(UpdateInstructorInput input, CancellationToken ct)
+		return Result<Instructor?>.Ok(instructor);
+	}
+
+	public async Task<IReadOnlyList<Instructor>> GetInstructorsAsync(CancellationToken ct)
+	{
+		return await instructorRepo.GetAllAsync(ct);
+	}
+
+
+	public Task<Result<Instructor?>> UpdateInstructorAsync(UpdateInstructorInput input, CancellationToken ct)
     {
         throw new NotImplementedException();
     }

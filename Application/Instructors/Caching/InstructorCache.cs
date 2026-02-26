@@ -7,7 +7,7 @@ namespace Application.Instructors.Caching;
 public sealed class InstructorCache(IMemoryCache cache) : CachedEntityBase<Instructor, string>(cache)
 {
 	protected override string Prefix => "instructors";
-	protected override string GetId(Instructor entity) => entity.Id;
+	protected override string GetId(Instructor entity) => entity.Id.ToString();
 
 	protected override IEnumerable<(string Name, string Value)> GetIndexes(Instructor entity)
 	{

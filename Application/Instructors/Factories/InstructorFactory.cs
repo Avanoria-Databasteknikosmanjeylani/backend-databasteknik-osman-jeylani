@@ -8,7 +8,7 @@ public static class InstructorFactory
 	public static Instructor Create(CreateInstructorInput input, InstructorRole role)
 		=> new
 		(
-			Guid.NewGuid().ToString(),
+			Guid.NewGuid(),
 			input.FirstName,
 			input.LastName,
 			input.Email,
