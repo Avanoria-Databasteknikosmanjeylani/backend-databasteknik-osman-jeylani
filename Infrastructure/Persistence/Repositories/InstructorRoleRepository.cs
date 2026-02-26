@@ -1,6 +1,8 @@
 ﻿using Domain.Instructors;
 using Domain.Instructors.Repositories;
 using Infrastructure.Persistence.EFC.Contexts;
+using Infrastructure.Persistence.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories;
 
@@ -24,35 +26,43 @@ public sealed class InstructorRoleRepository
         throw new NotImplementedException();
     }
 
-    public Task<InstructorRole?> GetByIdAsync(int id, CancellationToken ct)
+
+	public async Task<InstructorRole?> GetByIdAsync(Guid id, CancellationToken ct)
+	{
+		var entity = await _context.InstructorRoles
+			.FirstOrDefaultAsync(x => x.Id == id, ct);
+
+		if (entity is null)
+			return null;
+
+		return new InstructorRole(
+			entity.Id,
+			entity.Name
+		);
+	}
+
+	public async Task<InstructorRole?> GetByRoleNameAsync(string roleName, CancellationToken ct)
+	{
+		var entity = await _context.InstructorRoles
+			.FirstOrDefaultAsync(x => x.Name == roleName, ct);
+
+		if (entity is null)
+			return null;
+
+		return new InstructorRole(
+			entity.Id,
+			entity.Name
+		);
+	}
+
+
+
+	public Task<bool> RemoveAsync(Guid id, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
 
-    public Task<InstructorRole?> GetByIdAsync(Guid id, CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<InstructorRole?> GetByRoleNameAsync(string roleName, CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> RemoveAsync(int id, CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> RemoveAsync(Guid id, CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<InstructorRole?> UpdateAsync(int id, InstructorRole model, CancellationToken ct)
-    {
-        throw new NotImplementedException();
-    }
+  
 
     public Task<InstructorRole?> UpdateAsync(Guid id, InstructorRole model, CancellationToken ct)
     {

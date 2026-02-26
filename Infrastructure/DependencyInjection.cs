@@ -1,5 +1,6 @@
 ﻿using Application.Instructors.Caching;
 using Domain.Instructors.Repositories;
+using Domain.Modules.Courses.Repositories;
 using Infrastructure.Persistence.EFC.Contexts;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,13 @@ public static class DependencyInjection
 	{
 		services.AddDbContext<CourseOnlineDbContext>(options =>
 			options.UseSqlServer(
-				configuration.GetConnectionString("DefaultConnection")));
+				configuration.GetConnectionString("CourseOnlineDB")));
 
 		services.AddScoped<IInstructorRepository, InstructorRepository>();
 		services.AddScoped<IInstructorRoleRepository, InstructorRoleRepository>();
+
+		services.AddScoped<ICourseRepository, CourseRepository>();
+
 
 		services.AddScoped<InstructorCache>();
 

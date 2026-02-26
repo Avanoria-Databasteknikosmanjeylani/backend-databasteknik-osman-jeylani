@@ -10,20 +10,45 @@ public class CourseOnlineDbContext(DbContextOptions<CourseOnlineDbContext> optio
 	public DbSet<CourseSessionEntity> CourseSessions => Set<CourseSessionEntity>();
 	public DbSet<ParticipantEntity> Participants => Set<ParticipantEntity>();
 	public DbSet<CourseRegistrationEntity> CourseRegistrations => Set<CourseRegistrationEntity>();
+	public DbSet<InstructorRoleEntity> InstructorRoles => Set<InstructorRoleEntity>();
+
+	
 
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<InstructorEntity>(e =>
-        {
-            e.ToTable("Instructors");
-            e.HasKey(e => e.Id);
-            e.Property(e => e.FirstName).IsRequired();
-            e.Property(e => e.LastName).IsRequired();
-            e.Property(e => e.Email).IsRequired();
+		modelBuilder.Entity<InstructorEntity>(e =>
+		{
+			e.ToTable("Instructors");
+			e.HasKey(e => e.Id);
+			e.Property(e => e.FirstName).IsRequired();
+			e.Property(e => e.LastName).IsRequired();
+			e.Property(e => e.Email).IsRequired();
 
-            e.HasIndex(e => e.Email).IsUnique();
-        });
+			e.HasIndex(e => e.Email).IsUnique();
+
+			
+			e.HasOne(x => x.Role)
+			 .WithMany()
+			 .HasForeignKey(x => x.RoleId)
+			 .OnDelete(DeleteBehavior.Restrict);
+		});
+
+		modelBuilder.Entity<InstructorRoleEntity>(e =>
+		{
+			e.ToTable("InstructorRoles");
+			e.HasKey(x => x.Id);
+			e.Property(x => x.Name).IsRequired();
+		});
+
+
+
+		modelBuilder.Entity<InstructorRoleEntity>(e =>
+		{
+			e.ToTable("InstructorRoles");
+			e.HasKey(x => x.Id);
+			e.Property(x => x.Name).IsRequired();
+		});
 
 		modelBuilder.Entity<CourseEntity>(e =>
 		{
